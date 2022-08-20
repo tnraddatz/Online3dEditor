@@ -1,25 +1,22 @@
 import React, {useState, useEffect} from "react";
-import AceEditor from "react-ace";
-import "ace-builds/src-noconflict/mode-javascript";
-import "ace-builds/src-noconflict/mode-html";
-import "ace-builds/src-noconflict/mode-css";
-import "ace-builds/src-noconflict/theme-monokai";
 import SplitPane, {Pane} from "react-split-pane";
 import './editor.css'
 import { useDebounce } from "../../utils/debounce";
 import { JavascriptEditor, HtmlEditor } from "./editors";
+
 const Editor =  () => {
   //visual effects
   const innerHeightSubtractionForTitles = 60;
   const [heightValue, setHeightValue] = useState(window.innerHeight/2);
   const previewTitle = "Preview";
-
+  //End
   //HTML Document Output values 
   const [jsValue, setJsValue] = useState("");
   const [htmlValue, setHtmlValue] = useState("");
   const [outputValue, setOutputValue] = useState("");
   const debouncedJs = useDebounce(jsValue, 1000);
   const debouncedHtml = useDebounce(htmlValue, 1000);
+
   useEffect(() => {
     const output = `<html>
                     <body>
@@ -56,7 +53,13 @@ const Editor =  () => {
         </SplitPane>
       <div className={"editorContainer"}>
         <div className={"editorTitle"}>{previewTitle}</div>
-        <iframe title={previewTitle} srcDoc={outputValue} className={""} />
+        <iframe
+          title={previewTitle} 
+          srcDoc={outputValue}
+          width={"99%"}
+          height={(window.innerHeight - innerHeightSubtractionForTitles).toString() + "px"}
+          scrolling="no"
+          className={"iframe"} />
       </div>
     </SplitPane>
     </div>
