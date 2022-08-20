@@ -1,44 +1,66 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/mode-html";
 import "ace-builds/src-noconflict/mode-css";
 import "ace-builds/src-noconflict/theme-monokai";
-import SplitPane, { Pane } from "react-split-pane";
+import SplitPane, {Pane} from "react-split-pane";
 import './editor.css'
-
+import { useDebounce } from "../../utils/debounce";
+import { JavascriptEditor, HtmlEditor } from "./editors";
 const Editor =  () => {
-  const [height, SetHeight] = useState(window.innerHeight - 50);
-  function handleResize () {
-    SetHeight(window.innerHeight - 50)
-  }
-  window.addEventListener('resize', handleResize)
+  //visual effects
+  const innerHeightSubtractionForTitles = 60;
+  const [heightValue, setHeightValue] = useState(window.innerHeight/2);
+  const previewTitle = "Preview";
+  // function handleResize () {
+  //   SetHeight(window.innerHeight - 50)
+  // }
+  //window.addEventListener('resize', handleResize)
+  //End
+
+  //HTML Document Output values 
+  const [jsValue, setJsValue] = useState("");
+  const [htmlValue, setHtmlValue] = useState("");
+  const [outputValue, setOutputValue] = useState("");
+  const debouncedJs = useDebounce(jsValue, 1000);
+  const debouncedHtml = useDebounce(htmlValue, 1000);
+  useEffect(() => {
+    const output = `<html>
+                    <body>
+                    ${debouncedHtml}
+                    <script type="text/javascript">
+                    ${debouncedJs}
+                    </script>
+                    </body>
+                  </html>`;
+    setOutputValue(output);
+  }, [debouncedJs, debouncedHtml]);
+  //End
+
   return (
     <SplitPane split="vertical" minSize={"50%"}>
-      <div className={"editorContainer"}>
-        <div className={"editorTitle"}>
-          <Pane initialSize="50%" minSize="10%">
-          <AceEditor
-            mode={'javascript'}
-            theme="monokai"
-            name={'JavaScript'}
-            fontSize={18}
-            width={"100%"}
-            showPrintMargin={true}
-            showGutter={true}
-            tabSize={2}
-            height={height}
-            setOptions={{ useWorker: false }}    
+      <SplitPane split="horizontal" minSize={"50%"} onDragFinished={(height) => {
+        setHeightValue(height);
+      }}>
+        <Pane initialSize="75%" minSize="10%">
+          <JavascriptEditor 
+            height={(heightValue - innerHeightSubtractionForTitles).toString() + "px"}          
+            value={jsValue}
+            onChange={setJsValue}
           />
-          </Pane>
-        </div>
-      </div>
+        </Pane>
+        <Pane initialSize="25%" minSize="10%">
+          <HtmlEditor
+            height={(window.innerHeight - heightValue - innerHeightSubtractionForTitles).toString() + "px"}        
+            value={htmlValue}
+            onChange={setHtmlValue}
+          />
+        </Pane>
+        </SplitPane>
       <div className={"editorContainer"}>
-        <div className={"editorTitle"}>
-          <Pane initialSize="50%" minSize="10%">
-            Preview
-          </Pane>
-        </div>
+        <div className={"editorTitle"}>{previewTitle}</div>
+        <iframe title={previewTitle} srcDoc={outputValue} className={""} />
       </div>
     </SplitPane>
   );

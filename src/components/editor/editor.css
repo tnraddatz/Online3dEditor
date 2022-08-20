@@ -47,3 +47,9 @@ body {
   padding-left: 5px;
   position: relative;
 }
+
+.previewIframe {
+  width: 100vw;
+  height: 100vh;
+  border: 0;
+}
