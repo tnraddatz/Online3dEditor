@@ -19,11 +19,56 @@ const Editor =  () => {
   const debouncedHtml = useDebounce(htmlValue, 1000);
 
   useEffect(() => {
-    const output = `<html>
+    const output = `<!DOCTYPE html>
+                    <html lang="en">
+                      <head>
+                        <meta charset="UTF-8">
+                        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Virtual Visit</title>
+
+                        <style>
+                            html, body {
+                                overflow: hidden;
+                                width: 100%;
+                                height: 100%;
+                                margin: 0;
+                                padding: 0;
+                            }
+
+                            #renderCanvas {
+                                width: 100%;
+                                height: 100%;
+                                touch-action: none;
+                            }
+                        </style>
+
+                        <script src="https://cdn.babylonjs.com/babylon.js"></script>
+                        <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+                        <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+                      </head>
                     <body>
+                    <canvas id="renderCanvas" touch-action="none"></canvas> <!-- touch-action="none" for best results from PEP -->
                     ${debouncedHtml}
                     <script type="text/javascript">
+                    //SETUP PLAYGROUND
+                    const canvas = document.getElementById("renderCanvas"); // Get the canvas element
+                    const engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
+                    //---------------
+
+                    //PLAYGROUND
                     ${debouncedJs}
+ 
+                    //END PLAYGROUND
+                    //-- RENDER SCENE --             
+                    createScene().then(sceneToRender => {
+                      engine.runRenderLoop(() => sceneToRender.render());
+                    });
+
+                    // Watch for browser/canvas resize events
+                    window.addEventListener("resize", function () {
+                            engine.resize();
+                    });
                     </script>
                     </body>
                   </html>`;
