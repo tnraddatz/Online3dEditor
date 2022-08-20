@@ -13,11 +13,6 @@ const Editor =  () => {
   const innerHeightSubtractionForTitles = 60;
   const [heightValue, setHeightValue] = useState(window.innerHeight/2);
   const previewTitle = "Preview";
-  // function handleResize () {
-  //   SetHeight(window.innerHeight - 50)
-  // }
-  //window.addEventListener('resize', handleResize)
-  //End
 
   //HTML Document Output values 
   const [jsValue, setJsValue] = useState("");
@@ -39,18 +34,19 @@ const Editor =  () => {
   //End
 
   return (
+    <div className={"background"}>
     <SplitPane split="vertical" minSize={"50%"}>
       <SplitPane split="horizontal" minSize={"50%"} onDragFinished={(height) => {
         setHeightValue(height);
       }}>
-        <Pane initialSize="75%" minSize="10%">
+        <Pane>
           <JavascriptEditor 
             height={(heightValue - innerHeightSubtractionForTitles).toString() + "px"}          
             value={jsValue}
             onChange={setJsValue}
           />
         </Pane>
-        <Pane initialSize="25%" minSize="10%">
+        <Pane>
           <HtmlEditor
             height={(window.innerHeight - heightValue - innerHeightSubtractionForTitles).toString() + "px"}        
             value={htmlValue}
@@ -63,6 +59,7 @@ const Editor =  () => {
         <iframe title={previewTitle} srcDoc={outputValue} className={""} />
       </div>
     </SplitPane>
+    </div>
   );
 };
 
