@@ -9,7 +9,8 @@ const Editor =  () => {
   const innerHeightSubtractionForTitles = 60;
   const [heightValue, setHeightValue] = useState(window.innerHeight/2);
   const previewTitle = "Preview";
-  //End
+  //--------------
+
   //HTML Document Output values 
   const [jsValue, setJsValue] = useState("");
   const [htmlValue, setHtmlValue] = useState("");
@@ -28,29 +29,29 @@ const Editor =  () => {
                   </html>`;
     setOutputValue(output);
   }, [debouncedJs, debouncedHtml]);
-  //End
+  //----------------------------
 
+  //Returned Component
   return (
-    <div className={"background"}>
     <SplitPane split="vertical" minSize={"50%"}>
       <SplitPane split="horizontal" minSize={"50%"} onDragFinished={(height) => {
         setHeightValue(height);
       }}>
-        <Pane>
+        <Pane className={"none"}>
           <JavascriptEditor 
             height={(heightValue - innerHeightSubtractionForTitles).toString() + "px"}          
             value={jsValue}
             onChange={setJsValue}
           />
         </Pane>
-        <Pane>
+        <Pane className={"none"}>
           <HtmlEditor
             height={(window.innerHeight - heightValue - innerHeightSubtractionForTitles).toString() + "px"}        
             value={htmlValue}
             onChange={setHtmlValue}
           />
         </Pane>
-        </SplitPane>
+      </SplitPane>
       <div className={"editorContainer"}>
         <div className={"editorTitle"}>{previewTitle}</div>
         <iframe
@@ -62,8 +63,8 @@ const Editor =  () => {
           className={"iframe"} />
       </div>
     </SplitPane>
-    </div>
   );
+  //-----------------
 };
 
 export default Editor;
