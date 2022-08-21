@@ -28,7 +28,7 @@ const Editor = ({ mode, onChange, value, title, height }) => {
         theme="monokai"
         name={title}
         onChange={onChange}
-        fontSize={18}
+        fontSize={13}
         width={"100%"}
         height={height}
         value={value}

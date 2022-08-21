@@ -78,7 +78,7 @@ const Editor =  () => {
 
   //Returned Component
   return (
-    <SplitPane split="vertical" minSize={"50%"}>
+    <SplitPane split="vertical" allowResize={false} minSize={"65%"}>
       <SplitPane split="horizontal" minSize={"50%"} onDragFinished={(height) => {
         setHeightValue(height);
       }}>
