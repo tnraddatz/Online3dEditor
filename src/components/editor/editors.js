@@ -28,11 +28,11 @@ const Editor = ({ mode, onChange, value, title, height }) => {
         theme="monokai"
         name={title}
         onChange={onChange}
-        fontSize={13}
+        fontSize={15}
         width={"100%"}
         height={height}
         value={value}
-        showPrintMargin={true}
+        showPrintMargin={false}
         showGutter={true}
         tabSize={2}
         setOptions={{ useWorker: false }}
