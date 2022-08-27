@@ -4,19 +4,11 @@ import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/mode-html";
 import "ace-builds/src-noconflict/mode-css";
 import "ace-builds/src-noconflict/theme-monokai";
-
+import "ace-builds/src-noconflict/theme-one_dark";
 import "./editor.css";
 
 export const JavascriptEditor = (props) => {
   return <Editor mode="javascript" title={"Javascript"} {...props} />;
-};
-
-export const HtmlEditor = (props) => {
-  return <Editor mode="html" title={"HTML"} {...props} />;
-};
-
-export const CssEditor = (props) => {
-  return <Editor mode="css" title={"CSS"} {...props} />;
 };
 
 const Editor = ({ mode, onChange, value, title, height }) => {
@@ -25,17 +17,18 @@ const Editor = ({ mode, onChange, value, title, height }) => {
       <div className={"editorTitle"}>{title}</div>
       <AceEditor
         mode={mode}
-        theme="monokai"
+        theme="one_dark"
         name={title}
         onChange={onChange}
-        fontSize={15}
+        fontSize={18}
         width={"100%"}
         height={height}
         value={value}
         showPrintMargin={false}
         showGutter={true}
         tabSize={2}
-        setOptions={{ useWorker: false }}
+        wrapEnabled={true}
+        setOptions={{ useWorker: false, fontFamily: "JetBrains" }}
       />
     </div>
   );

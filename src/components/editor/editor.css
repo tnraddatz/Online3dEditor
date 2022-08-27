@@ -59,3 +59,16 @@ body {
 iframe {
     border: 0;
 }
+
+.optionsContainer {
+  background-color: #1d1e22;
+  color: #b7bbc8;
+}
+
+/* https://github.com/JetBrains/JetBrainsMono */
+@font-face{
+  font-family: 'JetBrains';
+  src: url('JetBrainsMonoNL-ExtraBold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: bold;
+}
