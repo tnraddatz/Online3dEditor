@@ -46,14 +46,7 @@ body {
   color: #b7bbc8;
   padding-left: 5px;
   padding-top: 5px;
-  padding-bottom: 1000px;
   position: relative;
-}
-
-.previewIframe {
-  width: 100vw;
-  height: 100vh;
-  border: 0;
 }
 
 iframe {

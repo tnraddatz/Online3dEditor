@@ -1,14 +1,16 @@
-import React, {useState, useEffect} from "react";
-import SplitPane from "react-split-pane";
-import './editor.css'
-import { useDebounce } from "../../utils/debounce";
-import { JavascriptEditor } from "./editors";
+import React, {useState, useEffect} from 'react';
+import SplitPane from 'react-split-pane';
+import './editor.css';
+import { useDebounce } from '../../utils/debounce';
+import { JavascriptEditor } from './editors';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+
+
 const Editor =  () => {
   //visual effects
-  const previewTitle = "Preview";
-  const height = "80%";
+  const previewTitle = 'Preview';
+  const height = '80%';
   //HTML Document Output values 
   const [jsValue, setJsValue] = useState(`
 
@@ -204,7 +206,7 @@ const Editor =  () => {
       return scene;
   
   };`);
-  const [outputValue, setOutputValue] = useState("");
+  const [outputValue, setOutputValue] = useState('');
   const debouncedJs = useDebounce(jsValue, 1500);
 
   useEffect(() => {
@@ -269,29 +271,29 @@ const Editor =  () => {
   return (
     <div>
       <div className="optionsContainer"> 
-      <ButtonGroup variant="contained" aria-label="outlined primary button group">
-        <Button>Save</Button>
-        <Button>Load</Button>
-      </ButtonGroup>
+        <ButtonGroup variant="contained" aria-label="outlined primary button group">
+          <Button>Save</Button>
+          <Button>Load</Button>
+        </ButtonGroup>
       </div>
-      <SplitPane split="vertical" allowResize={false} minSize={"65%"}>
-            <JavascriptEditor         
-              value={jsValue}
-              onChange={setJsValue}
-              height={height}
-            />
-        <div className={"editorContainer"}>
-          <div className={"editorTitle"}>{previewTitle}</div>
+      <SplitPane split="vertical" allowResize={false} minSize={'65%'}>
+        <JavascriptEditor         
+          value={jsValue}
+          onChange={setJsValue}
+          height={height}
+        />
+        <div className={'editorContainer'}>
+          <div className={'editorTitle'}>{previewTitle}</div>
           <iframe
             title={previewTitle} 
             srcDoc={outputValue}
-            width={"99%"}
+            width={'99%'}
             height={height}
             scrolling="no"
-            className={"iframe"} />
+            className={'iframe'} />
         </div>
       </SplitPane>
-      </div>
+    </div>
   );
   //-----------------
 };
